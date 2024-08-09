@@ -15,32 +15,24 @@ const { recipe } = model.state;
 
 async function showRecipe() {
   try {
+    
+    
     let id = window.location.hash;
     id = id.slice(1);
     if (!id) return;
-    console.log(id);
 
     renderSpinner(recipeContainer);
+    
+    console.log(id);
+    
     await model.loadRecipe(id);
-    
-    const resp = await fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/${id}`);
-    const data = await resp.json();
-    console.log(resp, data);
-    let recipe = data.data.recipe; 
-   
-    recipe = {
-      id: recipe.id,
-      title: recipe.title,
-      publisher: recipe.publisher,
-      sourceUrl: recipe.source_url,
-      image: recipe.image_url,
-      servings: recipe.servings,
-      cookTime: recipe.cooking_time,
-      ingredients: recipe.ingredients,
-    };
 
-    
+    const { recipe } = model.state;
 
+  
+ 
+
+  
     const ingredientsMarkup = recipe.ingredients.map(ing => {
       return `
         <li class="recipe__ingredient">
@@ -175,7 +167,8 @@ async function showRecipe() {
 }
 
 window.addEventListener('hashchange', showRecipe);
-['hashchange', 'load'].forEach(event => window.addEventListener(event, showRecipe));
+['hashchange', 'load'].forEach(ev => window.addEventListener(ev, showRecipe));
+
 
 
 
